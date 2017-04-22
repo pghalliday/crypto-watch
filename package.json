@@ -1,0 +1,22 @@
+{
+  "name": "crypto-watch",
+  "version": "1.0.0",
+  "description": "Watch crypto-currency addresses",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pghalliday/crypto-watch.git"
+  },
+  "author": "Peter Halliday <pghalliday@gmail.com> (http://pghalliday.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pghalliday/crypto-watch/issues"
+  },
+  "homepage": "https://github.com/pghalliday/crypto-watch#readme",
+  "devDependencies": {
+    "lighthouse": "^1.6.5"
+  }
+}
