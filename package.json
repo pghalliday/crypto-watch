@@ -3,10 +3,22 @@
   "version": "1.0.0",
   "description": "Watch crypto-currency addresses",
   "main": "index.js",
+  "config": {
+    "polymer_test_skip": "sauce"
+  },
   "scripts": {
-    "start": "polymer serve",
-    "build": "polymer build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ui:serve": "polymer serve --port 8080 --hostname 0.0.0.0",
+    "ui:serve:build": "http-server -p 8081 build/default",
+    "ui:lint": "eslint ui --ext js,html",
+    "ui:test": "cross-conf-env polymer test --skip-plugin $npm_package_config_polymer_test_skip",
+    "ui:build": "polymer build",
+    "alarmist:ui:serve": "alarmist-npm --service ui:serve",
+    "alarmist:ui:serve:build": "alarmist-npm --service ui:serve:build",
+    "alarmist:ui:lint": "chokidar \"ui/+(src|test)/**/*\" -c \"alarmist-npm ui:lint\"",
+    "alarmist:ui:test": "chokidar \"bower_components/**/*\" \"ui/+(src|test)/**/*\" -c \"alarmist-npm ui:test\"",
+    "alarmist:ui:build": "chokidar \"bower_components/**/*\" \"ui/src/**/*\" \"index.html\" \"manifest.json\" \"sw-precache-config.js\" \"bower.json\" \"images/**/*\" -c \"alarmist-npm ui:build\"",
+    "start": "alarmist-monitor run-p alarmist:ui:serve alarmist:ui:serve:build alarmist:ui:lint alarmist:ui:test alarmist:ui:build",
+    "build": "run-s ui:lint ui:test ui:build"
   },
   "repository": {
     "type": "git",
@@ -19,7 +31,20 @@
   },
   "homepage": "https://github.com/pghalliday/crypto-watch#readme",
   "devDependencies": {
+    "alarmist": "^1.0.23",
+    "alarmist-npm": "^1.0.5",
+    "alarmist-webpack": "^1.0.11",
+    "bower": "^1.8.0",
+    "chokidar-cli": "^1.2.0",
+    "cross-conf-env": "^1.1.2",
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-plugin-html": "^2.0.1",
+    "http-server": "^0.9.0",
     "lighthouse": "^1.6.5",
-    "polymer-cli": "next"
-  }
+    "npm-run-all": "^4.0.2",
+    "polymer-cli": "next",
+    "web-component-tester-istanbul": "^0.10.0"
+  },
+  "dependencies": {}
 }

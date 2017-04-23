@@ -1,0 +1,17 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="ui-root">
+  <template>
+    <div id="hello">Hello, world!</div>
+  </template>
+
+  <script>
+    class UiRoot extends Polymer.Element {
+      static get is() {
+        return 'ui-root';
+      }
+    }
+
+    window.customElements.define(UiRoot.is, UiRoot);
+  </script>
+</dom-module>

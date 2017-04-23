@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>my-view1</title>
+
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../../src/ui-root.html">
+  </head>
+  <body>
+    <test-fixture id="default attributes">
+      <template>
+        <ui-root></ui-root>
+      </template>
+    </test-fixture>
+
+    <script>
+      chai.should();
+      var uiRoot;
+      describe('ui-root', function() {
+        beforeEach(function() {
+          uiRoot = fixture('default attributes');
+        });
+
+        it('should say hello', function() {
+          uiRoot.$.hello.textContent.should.eql('Hello, world!');
+        });
+      });
+    </script>
+  </body>
+</html>

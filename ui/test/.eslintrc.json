@@ -1,0 +1,11 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "globals": {
+    "chai": false,
+    "expect": false,
+    "fixture": false,
+    "WCT": false
+  }
+}

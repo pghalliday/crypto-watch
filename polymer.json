@@ -1,10 +1,10 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/crypto-watch-app.html",
+  "shell": "ui/src/ui-root.html",
   "fragments": [
   ],
   "sources": [
-    "src/**/*",
+    "ui/src/**/*",
     "images/**/*",
     "bower.json"
   ],
