@@ -21,7 +21,8 @@
     "build": "run-s ui:lint ui:test ui:build",
     "coveralls": "cat ui/coverage/lcov.info | coveralls",
     "predeploy": "./predeploy.sh",
-    "deploy": "gh-pages-travis"
+    "deploy": "gh-pages-travis",
+    "wct:start": "wct --persistent --skip-plugin sauce"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
     "lighthouse": "^1.6.5",
     "npm-run-all": "^4.0.2",
     "polymer-cli": "next",
+    "web-component-tester": "^6.0.0-prerelease.9",
     "web-component-tester-istanbul": "^0.10.0"
   },
   "dependencies": {}

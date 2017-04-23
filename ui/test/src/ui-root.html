@@ -9,11 +9,10 @@
     <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../../bower_components/web-component-tester/browser.js"></script>
 
-    <!-- Import the element to test -->
     <link rel="import" href="../../src/ui-root.html">
   </head>
   <body>
-    <test-fixture id="default attributes">
+    <test-fixture id="defaultAttributes">
       <template>
         <ui-root></ui-root>
       </template>
@@ -24,7 +23,7 @@
       var uiRoot;
       describe('ui-root', function() {
         beforeEach(function() {
-          uiRoot = fixture('default attributes');
+          uiRoot = fixture('defaultAttributes');
         });
 
         it('should say hello', function() {
