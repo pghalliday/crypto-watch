@@ -1,0 +1,19 @@
+{
+  "name": "crypto-watch",
+  "description": "Watch crypto-currency addresses",
+  "authors": [
+    "Peter Halliday <pghalliday@gmail.com> (http://pghalliday.com)"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/pghalliday/crypto-watch",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^v2.0.0-rc.7"
+  }
+}

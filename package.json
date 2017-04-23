@@ -4,6 +4,8 @@
   "description": "Watch crypto-currency addresses",
   "main": "index.js",
   "scripts": {
+    "start": "polymer serve",
+    "build": "polymer build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +19,7 @@
   },
   "homepage": "https://github.com/pghalliday/crypto-watch#readme",
   "devDependencies": {
-    "lighthouse": "^1.6.5"
+    "lighthouse": "^1.6.5",
+    "polymer-cli": "next"
   }
 }
