@@ -1,5 +1,7 @@
 # crypto-watch
 
+[![Build Status](https://travis-ci.org/pghalliday/crypto-watch.svg?branch=master)](https://travis-ci.org/pghalliday/crypto-watch)
+
 Watch crypto-currency addresses.
 
 ## Contributing
