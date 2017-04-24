@@ -1,3 +1,4 @@
+/.nyc_output/
 /.alarmist/
 /build/
 /node_modules/

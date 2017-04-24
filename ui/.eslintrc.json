@@ -11,11 +11,13 @@
   ],
   "rules": {
     "brace-style": "off",
-    "new-cap": ["error", { "capIsNewExceptions": ["Polymer"] }],
+    "new-cap": ["error", { "capIsNewExceptions": ["Polymer", "PolymerRedux"] }],
     "no-var": "off",
     "require-jsdoc": "off"
   },
   "globals": {
-    "Polymer": true
+    "Polymer": true,
+    "PolymerRedux": true,
+    "app": true
   }
 }

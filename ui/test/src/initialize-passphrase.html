@@ -9,6 +9,7 @@
     <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../../bower_components/web-component-tester/browser.js"></script>
 
+    <link rel="import" href="../helpers/common.html">
     <link rel="import" href="../../src/initialize-passphrase.html">
   </head>
   <body>
@@ -19,7 +20,6 @@
     </test-fixture>
 
     <script>
-      chai.should();
       let initializePassphrase;
       describe('initialize-passphrase', function() {
         beforeEach(function(done) {

@@ -3,9 +3,11 @@
     "mocha": true
   },
   "globals": {
+    "sinon": false,
     "chai": false,
     "expect": false,
     "fixture": false,
+    "flush": false,
     "WCT": false
   }
 }

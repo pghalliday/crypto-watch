@@ -1,0 +1,42 @@
+{
+  "name": "polymer-redux",
+  "authors": [
+    "Christopher Turner <turner296@gmail.com>"
+  ],
+  "description": "Polymer bindings for Redux.",
+  "main": "polymer-redux.html",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "redux",
+    "polymer",
+    "reducer",
+    "state",
+    "web-components"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/tur-nr/polymer-redux",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "^2.0.0-rc.3"
+  },
+  "_release": "1bd25093d5",
+  "_resolution": {
+    "type": "branch",
+    "branch": "polymer-2",
+    "commit": "1bd25093d58872f2c272943c6d4b03b876f94533"
+  },
+  "_source": "https://github.com/tur-nr/polymer-redux.git",
+  "_target": "polymer-2",
+  "_originalSource": "polymer-redux",
+  "_direct": true
+}
