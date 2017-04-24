@@ -1,14 +1,44 @@
+<link rel="import" href="./lib/intl.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="./ui-theme.html">
+<link rel="import" href="./initialize-passphrase.html">
 
 <dom-module id="ui-root">
   <template>
-    <div id="hello">Hello, world!</div>
+    <style include="ui-theme"></style>
+    <app-header-layout>
+      <app-header>
+        <app-toolbar>
+          <div id="title" main-title>[[localize('app-title')]]</div>
+        </app-toolbar>
+      </app-header>
+      <initialize-passphrase></initialize-passphrase>
+    </app-header-layout>
   </template>
 
   <script>
-    class UiRoot extends Polymer.Element {
+    class UiRoot extends Polymer.mixinBehaviors(
+      [Polymer.AppLocalizeBehavior],
+      Polymer.Element
+    ) {
       static get is() {
         return 'ui-root';
+      }
+
+      static get properties() {
+        return {
+          language: {
+            value: 'en',
+          },
+        };
+      }
+
+      attached() {
+        this.loadResources(this.resolveUrl('../../locales.json'));
       }
     }
     window.customElements.define(UiRoot.is, UiRoot);

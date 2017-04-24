@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>my-view1</title>
+    <title>ui-root</title>
 
     <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../../bower_components/web-component-tester/browser.js"></script>
@@ -20,14 +20,22 @@
 
     <script>
       chai.should();
-      var uiRoot;
+      let uiRoot;
       describe('ui-root', function() {
-        beforeEach(function() {
+        beforeEach(function(done) {
           uiRoot = fixture('defaultAttributes');
+          const stringsLoaded = function() {
+            uiRoot.removeEventListener(
+              'app-localize-resources-loaded',
+              stringsLoaded
+            );
+            flush(done);
+          };
+          uiRoot.addEventListener('app-localize-resources-loaded', stringsLoaded);
         });
 
-        it('should say hello', function() {
-          uiRoot.$.hello.textContent.should.eql('Hello, world!');
+        it('should display the title', function() {
+          uiRoot.$.title.textContent.should.eql(uiRoot.localize('app-title'));
         });
       });
     </script>

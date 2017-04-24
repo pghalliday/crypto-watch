@@ -1,0 +1,10 @@
+{
+  "en": {
+    "app-title": "CryptoWatch",
+    "initialize-passphrase-message": "This is the first time you have run CryptoWatch. Enter a passphrase to initialize a new, encrypted settings database.",
+    "passphrase-label": "Passphrase",
+    "confirm-passphrase-label": "Confirm passphrase",
+    "confirm-passphrase-error": "The passphrases do not match",
+    "initialize-button": "Initialize"
+  }
+}

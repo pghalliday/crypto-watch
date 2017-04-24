@@ -1,0 +1,95 @@
+<link rel="import" href="./lib/intl.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="initialize-passphrase">
+  <template>
+    <style include="iron-flex"></style>
+      <div class="layout vertical center">
+        <paper-card>
+          <div class="card-content">
+            <div>[[localize('initialize-passphrase-message')]]</div>
+            <paper-input
+              id="passphrase"
+              type="password"
+              label="[[localize('passphrase-label')]]"
+              value="{{passphrase}}"
+            ></paper-input>
+            <paper-input
+              id="confirmPassphrase"
+              type="password"
+              label="[[localize('confirm-passphrase-label')]]"
+              value="{{confirmPassphrase}}"
+              error-message="[[localize('confirm-passphrase-error')]]"
+            ></paper-input>
+          </div>
+          <div class="card-actions">
+            <paper-button class="layout vertical center"
+              id="initialize"
+              raised class="indigo"
+              on-tap="_initialize"
+              disabled$="[[_isInitializeDisabled(passphrase, confirmPassphrase)]]"
+            >[[localize('initialize-button')]]</paper-button>
+          </div>
+        </paper-card>
+      </div>
+  </template>
+
+  <script>
+    class InitializePassphrase extends Polymer.mixinBehaviors(
+      [Polymer.AppLocalizeBehavior],
+      Polymer.Element
+    ) {
+      static get is() {
+        return 'initialize-passphrase';
+      }
+
+      static get properties() {
+        return {
+          language: {
+            value: 'en',
+          },
+          passphrase: {
+            type: String,
+            value: '',
+            observer: '_validatePassphrase',
+          },
+          confirmPassphrase: {
+            type: String,
+            value: '',
+            observer: '_validatePassphrase',
+          },
+        };
+      }
+
+      _validatePassphrase() {
+        this.$.confirmPassphrase.invalid = (
+          this.passphrase !== this.confirmPassphrase
+        );
+      }
+
+      _isInitializeDisabled() {
+        return this.passphrase === '' || (
+          this.passphrase !== this.confirmPassphrase
+        );
+      }
+
+      _initialize() {
+        this.dispatchEvent(new CustomEvent('initialize', {
+          detail: {
+            passphrase: this.passphrase,
+          },
+        }));
+      }
+
+      attached() {
+        this.loadResources(this.resolveUrl('../../locales.json'));
+      }
+    }
+    window.customElements.define(InitializePassphrase.is, InitializePassphrase);
+  </script>
+</dom-module>
