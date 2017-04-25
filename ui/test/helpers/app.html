@@ -1,10 +1,9 @@
-<link rel="import" href="../../src/app.html">
+<link rel="import" href="../../src/lib/app.html">
 <script>
   (function() {
     var stubs = [];
     var listeners = [];
     var app = window.app;
-    sinon.stub(app, 'start');
     sinon.stub(app.store, 'dispatch');
     sinon.stub(app.store, 'subscribe', function(listener) {
       listeners.push(listener);
@@ -41,7 +40,6 @@
         });
       },
       reset: function() {
-        app.start.reset();
         app.store.dispatch.reset();
         app.store.subscribe.reset();
         resetStubs();

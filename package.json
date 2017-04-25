@@ -64,6 +64,7 @@
     "gh-pages-travis": "^1.0.4",
     "http-server": "^0.9.0",
     "lighthouse": "^1.6.5",
+    "lodash": "^4.17.4",
     "mocha": "^3.3.0",
     "npm-run-all": "^4.0.2",
     "nyc": "^10.2.0",
@@ -77,6 +78,8 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "crypto-js": "^3.1.9-1",
+    "localforage": "^1.5.0",
     "redux": "^3.6.0",
     "redux-actions": "^2.0.2",
     "redux-devtools-extension": "^2.13.0",
