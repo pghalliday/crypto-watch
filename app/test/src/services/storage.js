@@ -3,6 +3,7 @@ import sha256 from 'crypto-js/sha256';
 import localforage from 'localforage';
 import Service from '../../../src/services/storage';
 
+const namespace = 'test';
 const secret = 'this is a secret';
 const secretKey = sha256(secret).toString();
 const otherSecret = 'this is another secret';
@@ -29,22 +30,32 @@ const encryptedOther = aes.helpers.encrypt(JSON.stringify(other), otherSecret);
 const encryptedUpdated = aes.helpers.encrypt(JSON.stringify(updated), secret);
 
 const emptyData = {
-  [secretKey]: encryptedEmpty,
+  [namespace]: {
+    [secretKey]: encryptedEmpty,
+  },
 };
 const existingData = {
-  [secretKey]: encryptedExisting,
-  [otherSecretKey]: encryptedOther,
+  [namespace]: {
+    [secretKey]: encryptedExisting,
+    [otherSecretKey]: encryptedOther,
+  },
 };
 const reencryptedExistingData = {
-  [newSecretKey]: reencryptedExisting,
-  [otherSecretKey]: encryptedOther,
+  [namespace]: {
+    [newSecretKey]: reencryptedExisting,
+    [otherSecretKey]: encryptedOther,
+  },
 };
 const deletedExistingData = {
-  [otherSecretKey]: encryptedOther,
+  [namespace]: {
+    [otherSecretKey]: encryptedOther,
+  },
 };
 const updatedData = {
-  [secretKey]: encryptedUpdated,
-  [otherSecretKey]: encryptedOther,
+  [namespace]: {
+    [secretKey]: encryptedUpdated,
+    [otherSecretKey]: encryptedOther,
+  },
 };
 
 let service;
@@ -53,7 +64,7 @@ let data;
 
 describe('service', () => {
   beforeEach(() => {
-    service = new Service();
+    service = new Service(namespace);
   });
 
   describe('with no supported storage methods', () => {
@@ -125,14 +136,15 @@ describe('service', () => {
         describe('#unlock', () => {
           describe('with an incorrect secret', () => {
             it('should fail', () => {
-              return service.unlock(incorrectSecret)
-              .should.be.rejectedWith('unknown secret');
+              (() => {
+                service.unlock(incorrectSecret);
+              }).should.throw('unknown secret');
             });
           });
 
           describe('with the correct secret', () => {
-            beforeEach(async () => {
-              data = await service.unlock(secret);
+            beforeEach(() => {
+              data = service.unlock(secret);
             });
 
             it('should resolve to the data', () => {

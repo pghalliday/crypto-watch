@@ -3,29 +3,42 @@ import sha256 from 'crypto-js/sha256';
 import aes from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
 
+const EMPTY_DATA = {};
+
 export default class {
+  constructor(namespace) {
+    this.namespace = namespace;
+  }
+
+  async write() {
+    await localforage.setItem(this.namespace, this.data);
+  }
+
   async initialize() {
     await localforage.ready();
-    return await localforage.length();
+    this.data = await localforage.getItem(this.namespace) || EMPTY_DATA;
+    return Object.keys(this.data).length;
   }
 
   async clear() {
-    await localforage.clear();
+    await localforage.removeItem(this.namespace);
     delete this.secret;
     delete this.key;
   }
 
   async delete() {
-    await localforage.removeItem(this.key);
+    delete this.data[this.key];
     delete this.secret;
     delete this.key;
+    await this.write();
   }
 
   async update(data) {
-    await localforage.setItem(this.key, aes.encrypt(
+    this.data[this.key] = aes.encrypt(
       JSON.stringify(data),
       this.secret,
-    ).toString());
+    ).toString();
+    await this.write();
   }
 
   async create(secret, data) {
@@ -41,11 +54,11 @@ export default class {
     await this.update(data);
   }
 
-  async unlock(secret) {
+  unlock(secret) {
     this.secret = secret;
     this.key = sha256(secret).toString();
-    const encrypted = await localforage.getItem(this.key);
-    if (encrypted === null) {
+    const encrypted = this.data[this.key];
+    if (typeof encrypted === 'undefined') {
       throw new Error('unknown secret');
     }
     return JSON.parse(aes.decrypt(encrypted, this.secret).toString(Utf8));
