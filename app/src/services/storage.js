@@ -3,55 +3,84 @@ import sha256 from 'crypto-js/sha256';
 import aes from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
 
-const EMPTY_DATA = {};
+function immutableDelete(object, key) {
+  const newObject = {
+    ...object,
+  };
+  delete newObject[key];
+  return newObject;
+}
 
 export default class {
   constructor(namespace) {
     this.namespace = namespace;
   }
 
-  async write() {
-    await localforage.setItem(this.namespace, this.data);
+  get count() {
+    return Object.keys(this.data).length;
+  }
+
+  async write(data) {
+    await localforage.setItem(this.namespace, data);
+    this.data = data;
   }
 
   async initialize() {
     await localforage.ready();
-    this.data = await localforage.getItem(this.namespace) || EMPTY_DATA;
-    return Object.keys(this.data).length;
+    this.data = await localforage.getItem(this.namespace) || {};
+    return this.count;
   }
 
   async clear() {
     await localforage.removeItem(this.namespace);
     delete this.secret;
     delete this.key;
+    this.data = {};
+    return this.count;
   }
 
   async delete() {
-    delete this.data[this.key];
+    await this.write(immutableDelete(this.data, this.key));
     delete this.secret;
     delete this.key;
-    await this.write();
+    return this.count;
   }
 
   async update(data) {
-    this.data[this.key] = aes.encrypt(
-      JSON.stringify(data),
-      this.secret,
-    ).toString();
-    await this.write();
+    await this.write({
+      ...this.data,
+      [this.key]: aes.encrypt(
+        JSON.stringify(data),
+        this.secret,
+      ).toString(),
+    });
   }
 
   async create(secret, data) {
+    const key = sha256(secret).toString();
+    await this.write({
+      ...this.data,
+      [key]: aes.encrypt(
+        JSON.stringify(data),
+        secret,
+      ).toString(),
+    });
     this.secret = secret;
-    this.key = sha256(secret).toString();
-    await this.update(data);
+    this.key = key;
+    return this.count;
   }
 
   async changeSecret(secret, data) {
-    await this.delete();
+    const key = sha256(secret).toString();
+    await this.write({
+      ...immutableDelete(this.data, this.key),
+      [key]: aes.encrypt(
+        JSON.stringify(data),
+        secret,
+      ).toString(),
+    });
     this.secret = secret;
-    this.key = sha256(secret).toString();
-    await this.update(data);
+    this.key = key;
   }
 
   unlock(secret) {

@@ -90,14 +90,18 @@ describe('service', () => {
         length = await service.initialize();
       });
 
-      it('should resolve to 0', () => {
+      it('should return the length 0', () => {
         length.should.eql(0);
       });
 
       describe('then', () => {
         describe('#create', () => {
-          beforeEach(() => {
-            return service.create(secret, empty);
+          beforeEach(async () => {
+            length = await service.create(secret, empty);
+          });
+
+          it('should return the new length of 1', () => {
+            length.should.eql(1);
           });
 
           it('should store the encrypted data', () => {
@@ -118,14 +122,18 @@ describe('service', () => {
         length = await service.initialize();
       });
 
-      it('should resolve to 2', () => {
+      it('should return the length 2', () => {
         length.should.eql(2);
       });
 
       describe('then', () => {
         describe('#clear', () => {
-          beforeEach(() => {
-            return service.clear();
+          beforeEach(async () => {
+            length = await service.clear();
+          });
+
+          it('should return the new length of 0', () => {
+            length.should.eql(0);
           });
 
           it('should remove all the keys', () => {
@@ -164,8 +172,12 @@ describe('service', () => {
               });
 
               describe('#delete', () => {
-                beforeEach(() => {
-                  return service.delete();
+                beforeEach(async () => {
+                  length = await service.delete();
+                });
+
+                it('should return the new length of 1', () => {
+                  length.should.eql(1);
                 });
 
                 it('should remove the entry from storage', () => {

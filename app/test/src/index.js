@@ -1,4 +1,4 @@
-import * as app from '../../src';
+import app from '../../src';
 
 describe('app', () => {
   it('should export the store', () => {

@@ -23,6 +23,7 @@
       let uiRoot;
       describe('ui-root', function() {
         beforeEach(function(done) {
+          app.helpers.reset();
           uiRoot = fixture('defaultAttributes');
           const stringsLoaded = function() {
             uiRoot.removeEventListener(
@@ -36,6 +37,13 @@
 
         it('should display the title', function() {
           uiRoot.$.title.textContent.should.eql(uiRoot.localize('app-title'));
+        });
+
+        it('should initialize the app', function() {
+          app.initialize.should.have.been.calledOnce;
+          app.store.dispatch.should.have.been.calledWith(
+            app.initialize.value
+          );
         });
       });
     </script>

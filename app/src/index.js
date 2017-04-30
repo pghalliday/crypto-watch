@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import {
   createStore,
   applyMiddleware,
@@ -10,13 +11,23 @@ import {
 import {
   composeWithDevTools,
 } from 'redux-devtools-extension';
+import resolve from 'redux-duckling';
+
+import appFactory from './ducklings/app';
+import Storage from './services/storage';
 
 const logger = createLogger();
 const composeEnhancers = composeWithDevTools({
   // devtool options
 });
 
-export const store = createStore(
-  () => ({}),
-  composeEnhancers(applyMiddleware(thunk, promise, logger)),
-);
+const duckling = appFactory(new Storage('crypto-watch'));
+const {app, reducer} = resolve(duckling);
+
+module.exports = {
+  ...app,
+  store: createStore(
+    reducer,
+    composeEnhancers(applyMiddleware(thunk, promise, logger)),
+  ),
+};

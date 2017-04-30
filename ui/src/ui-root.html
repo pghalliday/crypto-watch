@@ -1,4 +1,5 @@
 <link rel="import" href="./lib/intl.html">
+<link rel="import" href="./lib/redux-mixin.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
 <link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
@@ -23,7 +24,7 @@
   <script>
     class UiRoot extends Polymer.mixinBehaviors(
       [Polymer.AppLocalizeBehavior],
-      Polymer.Element
+      Polymer.ReduxMixin(Polymer.Element)
     ) {
       static get is() {
         return 'ui-root';
@@ -34,11 +35,34 @@
           language: {
             value: 'en',
           },
+          hasError: {
+            type: Boolean,
+            statePath: app.hasError,
+          },
+          errorText: {
+            type: String,
+            statePath: app.getErrorText,
+          },
+          isPending: {
+            type: Boolean,
+            statePath: app.isPending,
+          },
+          count: {
+            type: Number,
+            statePath: app.getCount,
+          },
+        };
+      }
+
+      static get actions() {
+        return {
+          initialize: app.initialize,
         };
       }
 
       attached() {
         this.loadResources(this.resolveUrl('../../locales.json'));
+        this.dispatch('initialize');
       }
     }
     window.customElements.define(UiRoot.is, UiRoot);
