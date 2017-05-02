@@ -45,6 +45,23 @@
             app.initialize.value
           );
         });
+
+        describe('while initialization is pending', function() {
+          beforeEach(function(done) {
+            app.helpers.reset();
+            app.isPending.value = true;
+            app.helpers.notifyStateChange();
+            flush(done);
+          });
+
+          it('should display the pending component', function() {
+            uiRoot.root.querySelector('#pending').style.display.should.eql('');
+          });
+
+          it('should not display the initialize component', function() {
+            uiRoot.root.querySelector('#initialize').style.display.should.eql('none');
+          });
+        });
       });
     </script>
   </body>

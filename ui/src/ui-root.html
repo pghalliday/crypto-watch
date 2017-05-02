@@ -1,11 +1,13 @@
 <link rel="import" href="./lib/intl.html">
 <link rel="import" href="./lib/redux-mixin.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
 <link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="./ui-theme.html">
+<link rel="import" href="./initialize-pending.html">
 <link rel="import" href="./initialize-passphrase.html">
 
 <dom-module id="ui-root">
@@ -17,7 +19,12 @@
           <div id="title" main-title>[[localize('app-title')]]</div>
         </app-toolbar>
       </app-header>
-      <initialize-passphrase></initialize-passphrase>
+      <template is="dom-if" if="[[isPending]]">
+        <initialize-pending id="pending"></initialize-pending>
+      </template>
+      <template is="dom-if" if="[[_initialize(isPending, hasSettings)]]">
+        <initialize-passphrase id="initialize"></initialize-passphrase>
+      </template>
     </app-header-layout>
   </template>
 
@@ -35,6 +42,10 @@
           language: {
             value: 'en',
           },
+          isPending: {
+            type: Boolean,
+            statePath: app.isPending,
+          },
           hasError: {
             type: Boolean,
             statePath: app.hasError,
@@ -43,19 +54,15 @@
             type: String,
             statePath: app.getErrorText,
           },
-          isPending: {
-            type: Boolean,
-            statePath: app.isPending,
-          },
-          count: {
+          hasSettings: {
             type: Boolean,
             statePath: app.hasSettings,
           },
-          count: {
+          isUnlocked: {
             type: Boolean,
             statePath: app.isUnlocked,
           },
-          count: {
+          settings: {
             type: Object,
             statePath: app.getSettings,
           },
@@ -71,6 +78,10 @@
       attached() {
         this.loadResources(this.resolveUrl('../../locales.json'));
         this.dispatch('initialize');
+      }
+
+      _initialize(isPending, hasSettings) {
+        return !isPending && !hasSettings;
       }
     }
     window.customElements.define(UiRoot.is, UiRoot);

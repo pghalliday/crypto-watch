@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>initialize-passphrase</title>
+
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../helpers/common.html">
+    <link rel="import" href="../../src/initialize-pending.html">
+  </head>
+  <body>
+    <test-fixture id="defaultAttributes">
+      <template>
+        <initialize-pending></initialize-pending>
+      </template>
+    </test-fixture>
+
+    <script>
+      let initializePending;
+      describe('initialize-pending', function() {
+        beforeEach(function(done) {
+          initializePending = fixture('defaultAttributes');
+          const stringsLoaded = function() {
+            initializePending.removeEventListener(
+              'app-localize-resources-loaded',
+              stringsLoaded
+            );
+            flush(done);
+          };
+          initializePending.addEventListener(
+            'app-localize-resources-loaded',
+            stringsLoaded
+          );
+        });
+
+        it('should display the spinner', function() {
+          initializePending.$.spinner.should.be.ok;
+        });
+      });
+    </script>
+  </body>
+</html>

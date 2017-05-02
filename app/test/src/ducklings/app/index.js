@@ -87,6 +87,10 @@ describe('ducklings', () => {
     });
 
     describe('initial state', () => {
+      it('should be pending', () => {
+        app.isPending(initialState).should.be.true;
+      });
+
       it('should not have settings entries', () => {
         app.hasSettings(initialState).should.be.false;
       });

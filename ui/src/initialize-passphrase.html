@@ -9,34 +9,34 @@
 <dom-module id="initialize-passphrase">
   <template>
     <style include="iron-flex"></style>
-      <div class="layout vertical center">
-        <paper-card>
-          <div class="card-content">
-            <div>[[localize('initialize-passphrase-message')]]</div>
-            <paper-input
-              id="passphrase"
-              type="password"
-              label="[[localize('passphrase-label')]]"
-              value="{{passphrase}}"
-            ></paper-input>
-            <paper-input
-              id="confirmPassphrase"
-              type="password"
-              label="[[localize('confirm-passphrase-label')]]"
-              value="{{confirmPassphrase}}"
-              error-message="[[localize('confirm-passphrase-error')]]"
-            ></paper-input>
-          </div>
-          <div class="card-actions">
-            <paper-button class="layout vertical center"
-              id="initialize"
-              raised class="indigo"
-              on-tap="_initialize"
-              disabled$="[[_isInitializeDisabled(passphrase, confirmPassphrase)]]"
-            >[[localize('initialize-button')]]</paper-button>
-          </div>
-        </paper-card>
-      </div>
+    <div class="layout vertical center">
+      <paper-card>
+        <div class="card-content">
+          <div>[[localize('initialize-passphrase-message')]]</div>
+          <paper-input
+            id="passphrase"
+            type="password"
+            label="[[localize('passphrase-label')]]"
+            value="{{passphrase}}"
+          ></paper-input>
+          <paper-input
+            id="confirmPassphrase"
+            type="password"
+            label="[[localize('confirm-passphrase-label')]]"
+            value="{{confirmPassphrase}}"
+            error-message="[[localize('confirm-passphrase-error')]]"
+          ></paper-input>
+        </div>
+        <div class="card-actions">
+          <paper-button class="layout vertical center"
+            id="initialize"
+            raised class="indigo"
+            on-tap="_initialize"
+            disabled$="[[_isInitializeDisabled(passphrase, confirmPassphrase)]]"
+          >[[localize('initialize-button')]]</paper-button>
+        </div>
+      </paper-card>
+    </div>
   </template>
 
   <script>

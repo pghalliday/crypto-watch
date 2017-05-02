@@ -1,0 +1,38 @@
+<link rel="import" href="./lib/intl.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner-lite.html">
+
+<dom-module id="initialize-pending">
+  <template>
+    <style include="iron-flex"></style>
+    <div class="layout vertical center">
+      <paper-spinner-lite id="spinner" class="blue" active></paper-spinner-lite>
+    </div>
+  </template>
+
+  <script>
+    class InitializePending extends Polymer.mixinBehaviors(
+      [Polymer.AppLocalizeBehavior],
+      Polymer.Element
+    ) {
+      static get is() {
+        return 'initialize-pending';
+      }
+
+      static get properties() {
+        return {
+          language: {
+            value: 'en',
+          },
+        };
+      }
+
+      attached() {
+        this.loadResources(this.resolveUrl('../../locales.json'));
+      }
+    }
+    window.customElements.define(InitializePending.is, InitializePending);
+  </script>
+</dom-module>

@@ -31,6 +31,7 @@ export default factory(
     const completeClear = action('COMPLETE_CLEAR');
     return {
       initialState: {
+        pending: true,
         count: 0,
         settings: undefined,
       },
