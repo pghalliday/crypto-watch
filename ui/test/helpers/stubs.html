@@ -2,6 +2,45 @@
 // set up stubs before loading any components
 // as they are all linked up front
 
+app.helpers.stub([], 'isPending', false);
+app.helpers.stub([], 'hasError', false);
+app.helpers.stub([], 'getErrorText', '');
+app.helpers.stub([], 'hasSettings', false);
+app.helpers.stub([], 'isUnlocked', false);
+app.helpers.stub([], 'getSettings', undefined);
 app.helpers.stub([], 'initialize');
+
+app.helpers.stub(['unlock'], 'hasError', false);
+app.helpers.stub(['unlock'], 'getErrorText', '');
+app.helpers.stub(['unlock'], 'isComplete', false);
+app.helpers.stub(['unlock'], 'getSettings', undefined);
+app.helpers.stub(['unlock'], 'submit');
+
+app.helpers.stub(['create'], 'isPending', false);
+app.helpers.stub(['create'], 'hasError', false);
+app.helpers.stub(['create'], 'getErrorText', '');
+app.helpers.stub(['create'], 'isComplete', false);
+app.helpers.stub(['create'], 'getCount', 0);
+app.helpers.stub(['create'], 'getSettings', undefined);
+app.helpers.stub(['create'], 'submit');
+
+app.helpers.stub(['delete'], 'isPending', false);
+app.helpers.stub(['delete'], 'hasError', false);
+app.helpers.stub(['delete'], 'getErrorText', '');
+app.helpers.stub(['delete'], 'isComplete', false);
+app.helpers.stub(['delete'], 'getCount', 0);
+app.helpers.stub(['delete'], 'submit');
+
+app.helpers.stub(['clear'], 'isPending', false);
+app.helpers.stub(['clear'], 'hasError', false);
+app.helpers.stub(['clear'], 'getErrorText', '');
+app.helpers.stub(['clear'], 'isComplete', false);
+app.helpers.stub(['clear'], 'submit');
+
+app.helpers.stub(['changeSecret'], 'isPending', false);
+app.helpers.stub(['changeSecret'], 'hasError', false);
+app.helpers.stub(['changeSecret'], 'getErrorText', '');
+app.helpers.stub(['changeSecret'], 'isComplete', false);
+app.helpers.stub(['changeSecret'], 'submit');
 
 </script>

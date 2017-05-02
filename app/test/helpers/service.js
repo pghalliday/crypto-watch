@@ -10,7 +10,7 @@ export default class ServiceHelper {
   }
 
   _stub(isAsync, method) {
-    sinon.stub(this.service, method, () => {
+    sinon.stub(this.service, method).callsFake(() => {
       if (isAsync) {
         return new Promise((resolve, reject) => {
           process.nextTick(() => {
@@ -33,7 +33,7 @@ export default class ServiceHelper {
   }
 
   _reset(_, method) {
-    this.service[method].reset();
+    this.service[method].resetHistory();
   }
 
   _restore(_, method) {

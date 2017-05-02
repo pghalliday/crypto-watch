@@ -48,8 +48,16 @@
             statePath: app.isPending,
           },
           count: {
-            type: Number,
-            statePath: app.getCount,
+            type: Boolean,
+            statePath: app.hasSettings,
+          },
+          count: {
+            type: Boolean,
+            statePath: app.isUnlocked,
+          },
+          count: {
+            type: Object,
+            statePath: app.getSettings,
           },
         };
       }
