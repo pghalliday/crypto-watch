@@ -5,6 +5,8 @@
     "passphrase-label": "Passphrase",
     "confirm-passphrase-label": "Confirm passphrase",
     "confirm-passphrase-error": "The passphrases do not match",
-    "initialize-button": "Initialize"
+    "initialize-button": "Initialize",
+    "unlock-settings-message": "Enter your passphrase to unlock.",
+    "unlock-button": "Unlock"
   }
 }
