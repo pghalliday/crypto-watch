@@ -2,34 +2,35 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../../bower_components/paper-spinner/paper-spinner-lite.html">
 
-<dom-module id="initialize-pending">
+<dom-module id="initialize-error">
   <template>
     <paper-card>
-      <div class="card-content">
-        <paper-spinner-lite id="spinner" class="blue" active></paper-spinner-lite>
-      </div>
+      <div id="message" class="card-content">[[message]]</div>
     </paper-card>
   </template>
 
   <script>
-    class InitializePending extends Polymer.mixinBehaviors(
+    class InitializeError extends Polymer.mixinBehaviors(
       [Polymer.AppLocalizeBehavior],
       Polymer.Element
     ) {
       static get is() {
-        return 'initialize-pending';
+        return 'initialize-error';
       }
 
       static get properties() {
         return {
           is: {
             type: String,
-            value: InitializePending.is,
+            value: InitializeError.is,
           },
           language: {
             value: 'en',
+          },
+          message: {
+            type: String,
+            value: '',
           },
         };
       }
@@ -38,6 +39,6 @@
         this.loadResources(this.resolveUrl('../../locales.json'));
       }
     }
-    window.customElements.define(InitializePending.is, InitializePending);
+    window.customElements.define(InitializeError.is, InitializeError);
   </script>
 </dom-module>

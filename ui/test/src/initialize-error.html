@@ -10,39 +10,39 @@
     <script src="../../../bower_components/web-component-tester/browser.js"></script>
 
     <link rel="import" href="../helpers/common.html">
-    <link rel="import" href="../../src/initialize-pending.html">
+    <link rel="import" href="../../src/initialize-error.html">
   </head>
   <body>
     <test-fixture id="defaultAttributes">
       <template>
-        <initialize-pending></initialize-pending>
+        <initialize-error message="FAIL"></initialize-error>
       </template>
     </test-fixture>
 
     <script>
-      let initializePending;
-      describe('initialize-pending', function() {
+      let initializeError;
+      describe('initialize-error', function() {
         beforeEach(function(done) {
-          initializePending = fixture('defaultAttributes');
+          initializeError = fixture('defaultAttributes');
           const stringsLoaded = function() {
-            initializePending.removeEventListener(
+            initializeError.removeEventListener(
               'app-localize-resources-loaded',
               stringsLoaded
             );
             flush(done);
           };
-          initializePending.addEventListener(
+          initializeError.addEventListener(
             'app-localize-resources-loaded',
             stringsLoaded
           );
         });
 
         it('should have the correct type', function() {
-          initializePending.is.should.eql('initialize-pending');
+          initializeError.is.should.eql('initialize-error');
         });
 
-        it('should display the spinner', function() {
-          initializePending.$.spinner.should.be.ok;
+        it('should display the message', function() {
+          initializeError.$.message.textContent.should.eql('FAIL');
         });
       });
     </script>

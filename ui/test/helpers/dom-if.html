@@ -1,0 +1,35 @@
+<script>
+// eslint-disable-next-line no-unused-vars
+class DomIfGroup {
+  constructor(root, ids) {
+    this.ids = ids;
+    this.root = root;
+  }
+
+  check(ids) {
+    const elements = [];
+    ids.forEach((id) => {
+      if (this.ids.indexOf(id) === -1) {
+        throw new Error(id + ': element not in DomIfGroup');
+      }
+    });
+    this.ids.forEach((id) => {
+      const element = this.root.root.querySelector('#' + id);
+      if (ids.indexOf(id) === -1) {
+        if (element && element.style.display !== 'none') {
+          throw new Error(id + ': element should not be displayed');
+        }
+      } else {
+        elements.push(element);
+        if (!element) {
+          throw new Error(id + ': element not present');
+        }
+        if (element.style.display !== '') {
+          throw new Error(id + ': element not displayed');
+        }
+      }
+    });
+    return elements;
+  }
+}
+</script>

@@ -2,34 +2,35 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../../bower_components/paper-spinner/paper-spinner-lite.html">
 
-<dom-module id="initialize-pending">
+<dom-module id="main-view">
   <template>
     <paper-card>
-      <div class="card-content">
-        <paper-spinner-lite id="spinner" class="blue" active></paper-spinner-lite>
-      </div>
+      <div id="settings" class="card-content">[[_settings(settings)]]</div>
     </paper-card>
   </template>
 
   <script>
-    class InitializePending extends Polymer.mixinBehaviors(
+    class MainView extends Polymer.mixinBehaviors(
       [Polymer.AppLocalizeBehavior],
       Polymer.Element
     ) {
       static get is() {
-        return 'initialize-pending';
+        return 'main-view';
       }
 
       static get properties() {
         return {
           is: {
             type: String,
-            value: InitializePending.is,
+            value: MainView.is,
           },
           language: {
             value: 'en',
+          },
+          settings: {
+            type: Object,
+            value: {},
           },
         };
       }
@@ -37,7 +38,11 @@
       attached() {
         this.loadResources(this.resolveUrl('../../locales.json'));
       }
+
+      _settings(settings) {
+        return JSON.stringify(settings);
+      }
     }
-    window.customElements.define(InitializePending.is, InitializePending);
+    window.customElements.define(MainView.is, MainView);
   </script>
 </dom-module>

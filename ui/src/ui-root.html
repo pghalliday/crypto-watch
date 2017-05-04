@@ -6,9 +6,13 @@
 <link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="./ui-theme.html">
+<link rel="import" href="./initialize-error.html">
 <link rel="import" href="./initialize-pending.html">
 <link rel="import" href="./initialize-passphrase.html">
+<link rel="import" href="./unlock-settings.html">
+<link rel="import" href="./main-view.html">
 
 <dom-module id="ui-root">
   <template>
@@ -19,12 +23,23 @@
           <div id="title" main-title>[[localize('app-title')]]</div>
         </app-toolbar>
       </app-header>
-      <template is="dom-if" if="[[isPending]]">
-        <initialize-pending id="pending"></initialize-pending>
-      </template>
-      <template is="dom-if" if="[[_initialize(isPending, hasSettings)]]">
-        <initialize-passphrase id="initialize"></initialize-passphrase>
-      </template>
+      <style include="iron-flex"></style>
+      <div class="layout vertical center">
+        <template is="dom-if" if="[[hasError]]">
+          <initialize-error id="error" message="[[errorText]]"></initialize-error>
+        </template>
+        <template is="dom-if" if="[[isPending]]">
+          <initialize-pending id="pending"></initialize-pending>
+        </template>
+        <template is="dom-if" if="[[_initialize(isPending, hasSettings, hasError)]]">
+          <initialize-passphrase id="initialize"></initialize-passphrase>
+        </template>
+        <template is="dom-if" if="[[_unlock(hasSettings, isUnlocked)]]">
+          <unlock-settings id="unlock"></unlock-settings>
+        </template>
+        <template is="dom-if" if="[[isUnlocked]]">
+          <main-view id="main" settings="[[settings]]"></main-view>
+        </template>
     </app-header-layout>
   </template>
 
@@ -39,6 +54,10 @@
 
       static get properties() {
         return {
+          is: {
+            type: String,
+            value: UiRoot.is,
+          },
           language: {
             value: 'en',
           },
@@ -80,8 +99,12 @@
         this.dispatch('initialize');
       }
 
-      _initialize(isPending, hasSettings) {
-        return !isPending && !hasSettings;
+      _initialize(isPending, hasSettings, hasError) {
+        return !isPending && !hasSettings && !hasError;
+      }
+
+      _unlock(hasSettings, isUnlocked) {
+        return !isUnlocked && hasSettings;
       }
     }
     window.customElements.define(UiRoot.is, UiRoot);

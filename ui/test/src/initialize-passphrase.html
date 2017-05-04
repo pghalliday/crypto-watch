@@ -37,6 +37,10 @@
           );
         });
 
+        it('should have the correct type', function() {
+          initializePassphrase.is.should.eql('initialize-passphrase');
+        });
+
         describe('when the passphrases are empty', function() {
           beforeEach(function() {
             initializePassphrase.$.passphrase.value = '';

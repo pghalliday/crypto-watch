@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>initialize-passphrase</title>
+
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../helpers/common.html">
+    <link rel="import" href="../../src/unlock-settings.html">
+  </head>
+  <body>
+    <test-fixture id="defaultAttributes">
+      <template>
+        <unlock-settings></unlock-settings>
+      </template>
+    </test-fixture>
+
+    <script>
+      let unlockSettings;
+      describe('unlock-settings', function() {
+        beforeEach(function(done) {
+          unlockSettings = fixture('defaultAttributes');
+          const stringsLoaded = function() {
+            unlockSettings.removeEventListener(
+              'app-localize-resources-loaded',
+              stringsLoaded
+            );
+            flush(done);
+          };
+          unlockSettings.addEventListener(
+            'app-localize-resources-loaded',
+            stringsLoaded
+          );
+        });
+
+        it('should have the correct type', function() {
+          unlockSettings.is.should.eql('unlock-settings');
+        });
+
+        describe('when the passphrase is empty', function() {
+          beforeEach(function() {
+            unlockSettings.$.passphrase.value = '';
+          });
+
+          it('should disable the unlock button', function() {
+            unlockSettings.$.unlock.disabled.should.be.true;
+          });
+        });
+
+        describe('when the unlock button is pressed', function() {
+          beforeEach(function() {
+            unlockSettings.$.passphrase.value = 'passphrase';
+          });
+
+          it('should emit an unlock event', function(done) {
+            unlockSettings.addEventListener('unlock', function(event) {
+              event.detail.passphrase.should.eql('passphrase');
+              done();
+            });
+            unlockSettings.$.unlock.click();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

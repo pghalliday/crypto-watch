@@ -8,6 +8,7 @@
     "expect": false,
     "fixture": false,
     "flush": false,
-    "WCT": false
+    "WCT": false,
+    "DomIfGroup": false
   }
 }

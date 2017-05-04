@@ -28,6 +28,20 @@ export default class {
   async initialize() {
     await localforage.ready();
     this.data = await localforage.getItem(this.namespace) || {};
+
+    // These commented out lines are here to allow visual verification
+    // of unusual UI test cases.
+    //
+    // This line delays initialization so that the pending view
+    // can be checked.
+    //
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
+    //
+    // This line fails initialization so that the error view can
+    // be checked.
+    //
+    // throw new Error('FAIL');
+
     return this.count;
   }
 

@@ -5,50 +5,43 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
-<dom-module id="initialize-passphrase">
+<dom-module id="unlock-settings">
   <template>
     <paper-card>
       <div class="card-content">
-        <div>[[localize('initialize-passphrase-message')]]</div>
+        <div>[[localize('unlock-settings-message')]]</div>
         <paper-input
           id="passphrase"
           type="password"
           label="[[localize('passphrase-label')]]"
           value="{{passphrase}}"
         ></paper-input>
-        <paper-input
-          id="confirmPassphrase"
-          type="password"
-          label="[[localize('confirm-passphrase-label')]]"
-          value="{{confirmPassphrase}}"
-          error-message="[[localize('confirm-passphrase-error')]]"
-        ></paper-input>
       </div>
       <div class="card-actions">
         <paper-button
-          id="initialize"
+          id="unlock"
           raised class="indigo"
-          on-tap="_initialize"
-          disabled$="[[_isInitializeDisabled(passphrase, confirmPassphrase)]]"
-        >[[localize('initialize-button')]]</paper-button>
+          on-tap="_unlock"
+          disabled$="[[_isUnlockDisabled(passphrase)]]"
+        >[[localize('unlock-button')]]</paper-button>
       </div>
     </paper-card>
   </template>
 
   <script>
-    class InitializePassphrase extends Polymer.mixinBehaviors(
+    class UnlockSettings extends Polymer.mixinBehaviors(
       [Polymer.AppLocalizeBehavior],
       Polymer.Element
     ) {
       static get is() {
-        return 'initialize-passphrase';
+        return 'unlock-settings';
       }
 
       static get properties() {
         return {
           is: {
             type: String,
-            value: InitializePassphrase.is,
+            value: UnlockSettings.is,
           },
           language: {
             value: 'en',
@@ -56,30 +49,16 @@
           passphrase: {
             type: String,
             value: '',
-            observer: '_validatePassphrase',
-          },
-          confirmPassphrase: {
-            type: String,
-            value: '',
-            observer: '_validatePassphrase',
           },
         };
       }
 
-      _validatePassphrase() {
-        this.$.confirmPassphrase.invalid = (
-          this.passphrase !== this.confirmPassphrase
-        );
+      _isUnlockDisabled() {
+        return this.passphrase === '';
       }
 
-      _isInitializeDisabled() {
-        return this.passphrase === '' || (
-          this.passphrase !== this.confirmPassphrase
-        );
-      }
-
-      _initialize() {
-        this.dispatchEvent(new CustomEvent('initialize', {
+      _unlock() {
+        this.dispatchEvent(new CustomEvent('unlock', {
           detail: {
             passphrase: this.passphrase,
           },
@@ -90,6 +69,6 @@
         this.loadResources(this.resolveUrl('../../locales.json'));
       }
     }
-    window.customElements.define(InitializePassphrase.is, InitializePassphrase);
+    window.customElements.define(UnlockSettings.is, UnlockSettings);
   </script>
 </dom-module>

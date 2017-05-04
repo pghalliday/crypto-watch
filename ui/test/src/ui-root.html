@@ -21,6 +21,7 @@
 
     <script>
       let uiRoot;
+      let domIfGroup;
       describe('ui-root', function() {
         beforeEach(function(done) {
           app.helpers.reset();
@@ -33,6 +34,17 @@
             flush(done);
           };
           uiRoot.addEventListener('app-localize-resources-loaded', stringsLoaded);
+          domIfGroup = new DomIfGroup(uiRoot, [
+            'error',
+            'initialize',
+            'pending',
+            'unlock',
+            'main',
+          ]);
+        });
+
+        it('should have the correct type', function() {
+          uiRoot.is.should.eql('ui-root');
         });
 
         it('should display the title', function() {
@@ -55,11 +67,78 @@
           });
 
           it('should display the pending component', function() {
-            uiRoot.root.querySelector('#pending').style.display.should.eql('');
+            const [pending] = domIfGroup.check([
+              'pending',
+            ]);
+            pending.is.should.eql('initialize-pending');
+          });
+        });
+
+        describe('when there is an error', function() {
+          beforeEach(function(done) {
+            app.helpers.reset();
+            app.hasError.value = true;
+            app.getErrorText.value = 'FAIL';
+            app.helpers.notifyStateChange();
+            flush(done);
           });
 
-          it('should not display the initialize component', function() {
-            uiRoot.root.querySelector('#initialize').style.display.should.eql('none');
+          it('should display the error component', function() {
+            const [error] = domIfGroup.check([
+              'error',
+            ]);
+            error.is.should.eql('initialize-error');
+            error.message.should.eql('FAIL');
+          });
+        });
+
+        describe('when there are no settings', function() {
+          beforeEach(function(done) {
+            app.helpers.reset();
+            app.helpers.notifyStateChange();
+            flush(done);
+          });
+
+          it('should display the initialize component', function() {
+            const [initialize] = domIfGroup.check([
+              'initialize',
+            ]);
+            initialize.is.should.eql('initialize-passphrase');
+          });
+        });
+
+        describe('when there are settings', function() {
+          beforeEach(function(done) {
+            app.helpers.reset();
+            app.hasSettings.value = true;
+            app.helpers.notifyStateChange();
+            flush(done);
+          });
+
+          it('should display the unlock component', function() {
+            const [unlock] = domIfGroup.check([
+              'unlock',
+            ]);
+            unlock.is.should.eql('unlock-settings');
+          });
+        });
+
+        describe('when unlocked', function() {
+          beforeEach(function(done) {
+            app.helpers.reset();
+            app.hasSettings.value = true;
+            app.isUnlocked.value = true;
+            app.getSettings.value = 'settings';
+            app.helpers.notifyStateChange();
+            flush(done);
+          });
+
+          it('should display the main component', function() {
+            const [main] = domIfGroup.check([
+              'main',
+            ]);
+            main.is.should.eql('main-view');
+            main.settings.should.eql('settings');
           });
         });
       });

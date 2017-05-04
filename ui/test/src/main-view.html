@@ -10,39 +10,43 @@
     <script src="../../../bower_components/web-component-tester/browser.js"></script>
 
     <link rel="import" href="../helpers/common.html">
-    <link rel="import" href="../../src/initialize-pending.html">
+    <link rel="import" href="../../src/main-view.html">
   </head>
   <body>
     <test-fixture id="defaultAttributes">
       <template>
-        <initialize-pending></initialize-pending>
+        <main-view></main-view>
       </template>
     </test-fixture>
 
     <script>
-      let initializePending;
-      describe('initialize-pending', function() {
+      let mainView;
+      const settings = {
+        value: 'settings',
+      };
+      describe('main-view', function() {
         beforeEach(function(done) {
-          initializePending = fixture('defaultAttributes');
+          mainView = fixture('defaultAttributes');
+          mainView.settings = settings;
           const stringsLoaded = function() {
-            initializePending.removeEventListener(
+            mainView.removeEventListener(
               'app-localize-resources-loaded',
               stringsLoaded
             );
             flush(done);
           };
-          initializePending.addEventListener(
+          mainView.addEventListener(
             'app-localize-resources-loaded',
             stringsLoaded
           );
         });
 
         it('should have the correct type', function() {
-          initializePending.is.should.eql('initialize-pending');
+          mainView.is.should.eql('main-view');
         });
 
-        it('should display the spinner', function() {
-          initializePending.$.spinner.should.be.ok;
+        it('should display the settings', function() {
+          mainView.$.settings.textContent.should.eql(JSON.stringify(settings));
         });
       });
     </script>
