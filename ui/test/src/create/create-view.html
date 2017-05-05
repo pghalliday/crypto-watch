@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>create-view</title>
+
+    <script src="../../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../helpers/common.html">
+    <link rel="import" href="../../../src/create/create-view.html">
+  </head>
+  <body>
+    <test-fixture id="defaultAttributes">
+      <template>
+        <create-view></create-view>
+      </template>
+    </test-fixture>
+
+    <script>
+      let createView;
+      describe('create-view', function() {
+        beforeEach(function(done) {
+          createView = fixture('defaultAttributes');
+          const stringsLoaded = function() {
+            createView.removeEventListener(
+              'app-localize-resources-loaded',
+              stringsLoaded
+            );
+            flush(done);
+          };
+          createView.addEventListener(
+            'app-localize-resources-loaded',
+            stringsLoaded
+          );
+        });
+
+        it('should have the correct type', function() {
+          createView.is.should.eql('create-view');
+        });
+
+        it('should not display any error text', function() {
+          createView.$.error.hidden.should.be.true;
+        });
+
+        describe('when the passphrases are empty', function() {
+          beforeEach(function() {
+            createView.$.passphrase.value = '';
+            createView.$.confirmPassphrase.value = '';
+          });
+
+          it('should disable the create button', function() {
+            createView.$.create.disabled.should.be.true;
+          });
+        });
+
+        describe('when the passphrases do not match', function() {
+          beforeEach(function() {
+            createView.$.passphrase.value = 'passphrase';
+            createView.$.confirmPassphrase.value = 'passphras';
+          });
+
+          it('should disable the create button', function() {
+            createView.$.create.disabled.should.be.true;
+          });
+
+          it('should set the confirm passphrase error', function() {
+            createView.$.confirmPassphrase.invalid.should.be.true;
+          });
+        });
+
+        describe('when the passphrases match', function() {
+          beforeEach(function() {
+            createView.$.passphrase.value = 'passphrase';
+            createView.$.confirmPassphrase.value = 'passphrase';
+          });
+
+          describe('when the create button is pressed', function() {
+            it('should emit an create event', function(done) {
+              createView.addEventListener('create', function(event) {
+                event.detail.passphrase.should.eql('passphrase');
+                done();
+              });
+              createView.$.create.click();
+            });
+
+            describe('when pending', function() {
+              beforeEach(function() {
+                createView.pending = true;
+              });
+
+              it('should disable the create button', function() {
+                createView.$.create.disabled.should.be.true;
+              });
+            });
+
+            describe('when there is an error', function() {
+              beforeEach(function() {
+                createView.hasError = true;
+                createView.errorText = 'FAIL';
+              });
+
+              it('should display the error text', function() {
+                createView.$.error.hidden.should.be.false;
+                createView.$.error.textContent.should.eql('FAIL');
+              });
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

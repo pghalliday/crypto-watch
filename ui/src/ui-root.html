@@ -10,9 +10,9 @@
 <link rel="import" href="./ui-theme.html">
 <link rel="import" href="./initialize-error.html">
 <link rel="import" href="./initialize-pending.html">
-<link rel="import" href="./initialize-passphrase.html">
-<link rel="import" href="./unlock-settings.html">
-<link rel="import" href="./main-view.html">
+<link rel="import" href="./create/create-view.html">
+<link rel="import" href="./unlock/unlock-view.html">
+<link rel="import" href="./main/main-view.html">
 
 <dom-module id="ui-root">
   <template>
@@ -31,11 +31,11 @@
         <template is="dom-if" if="[[isPending]]">
           <initialize-pending id="pending"></initialize-pending>
         </template>
-        <template is="dom-if" if="[[_initialize(isPending, hasSettings, hasError)]]">
-          <initialize-passphrase id="initialize"></initialize-passphrase>
+        <template is="dom-if" if="[[_create(isPending, hasSettings, hasError)]]">
+          <create-view id="create"></create-view>
         </template>
         <template is="dom-if" if="[[_unlock(hasSettings, isUnlocked)]]">
-          <unlock-settings id="unlock"></unlock-settings>
+          <unlock-view id="unlock"></unlock-view>
         </template>
         <template is="dom-if" if="[[isUnlocked]]">
           <main-view id="main" settings="[[settings]]"></main-view>
@@ -99,7 +99,7 @@
         this.dispatch('initialize');
       }
 
-      _initialize(isPending, hasSettings, hasError) {
+      _create(isPending, hasSettings, hasError) {
         return !isPending && !hasSettings && !hasError;
       }
 

@@ -1,15 +1,15 @@
-<link rel="import" href="./lib/intl.html">
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../lib/intl.html">
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 
-<dom-module id="unlock-settings">
+<dom-module id="unlock-view">
   <template>
     <paper-card>
       <div class="card-content">
-        <div>[[localize('unlock-settings-message')]]</div>
+        <div>[[localize('unlock-view-message')]]</div>
         <paper-input
           id="passphrase"
           type="password"
@@ -29,19 +29,19 @@
   </template>
 
   <script>
-    class UnlockSettings extends Polymer.mixinBehaviors(
+    class UnlockView extends Polymer.mixinBehaviors(
       [Polymer.AppLocalizeBehavior],
       Polymer.Element
     ) {
       static get is() {
-        return 'unlock-settings';
+        return 'unlock-view';
       }
 
       static get properties() {
         return {
           is: {
             type: String,
-            value: UnlockSettings.is,
+            value: UnlockView.is,
           },
           language: {
             value: 'en',
@@ -66,9 +66,9 @@
       }
 
       attached() {
-        this.loadResources(this.resolveUrl('../../locales.json'));
+        this.loadResources(this.resolveUrl('../../../locales.json'));
       }
     }
-    window.customElements.define(UnlockSettings.is, UnlockSettings);
+    window.customElements.define(UnlockView.is, UnlockView);
   </script>
 </dom-module>

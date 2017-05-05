@@ -1,0 +1,105 @@
+<link rel="import" href="../lib/intl.html">
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="create-view">
+  <template>
+    <paper-card>
+      <div class="card-content">
+        <div>[[localize('create-view-message')]]</div>
+        <div id="error" hidden="[[!hasError]]">[[errorText]]</div>
+        <paper-input
+          id="passphrase"
+          type="password"
+          label="[[localize('passphrase-label')]]"
+          value="{{passphrase}}"
+        ></paper-input>
+        <paper-input
+          id="confirmPassphrase"
+          type="password"
+          label="[[localize('confirm-passphrase-label')]]"
+          value="{{confirmPassphrase}}"
+          error-message="[[localize('confirm-passphrase-error')]]"
+          invalid="[[_isPassphraseInvalid(passphrase, confirmPassphrase)]]"
+        ></paper-input>
+      </div>
+      <div class="card-actions">
+        <paper-button
+          id="create"
+          raised class="indigo"
+          on-tap="_create"
+          disabled$="[[_isCreateDisabled(passphrase, confirmPassphrase, pending)]]"
+        >[[localize('create-button')]]</paper-button>
+      </div>
+    </paper-card>
+  </template>
+
+  <script>
+    class CreateView extends Polymer.mixinBehaviors(
+      [Polymer.AppLocalizeBehavior],
+      Polymer.Element
+    ) {
+      static get is() {
+        return 'create-view';
+      }
+
+      static get properties() {
+        return {
+          is: {
+            type: String,
+            value: CreateView.is,
+          },
+          language: {
+            value: 'en',
+          },
+          passphrase: {
+            type: String,
+            value: '',
+          },
+          confirmPassphrase: {
+            type: String,
+            value: '',
+          },
+          pending: {
+            type: Boolean,
+            value: false,
+          },
+          hasError: {
+            type: Boolean,
+            value: false,
+          },
+          errorText: {
+            type: String,
+            value: '',
+          },
+        };
+      }
+
+      _isPassphraseInvalid(passphrase, confirmPassphrase) {
+        return this.passphrase !== this.confirmPassphrase;
+      }
+
+      _isCreateDisabled(passphrase, confirmPassphrase, pending) {
+        return passphrase === '' || (
+          passphrase !== confirmPassphrase
+        ) || pending;
+      }
+
+      _create() {
+        this.dispatchEvent(new CustomEvent('create', {
+          detail: {
+            passphrase: this.passphrase,
+          },
+        }));
+      }
+
+      attached() {
+        this.loadResources(this.resolveUrl('../../../locales.json'));
+      }
+    }
+    window.customElements.define(CreateView.is, CreateView);
+  </script>
+</dom-module>

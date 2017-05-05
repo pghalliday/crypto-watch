@@ -6,62 +6,62 @@
 
     <title>initialize-passphrase</title>
 
-    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../../bower_components/web-component-tester/browser.js"></script>
+    <script src="../../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../../bower_components/web-component-tester/browser.js"></script>
 
-    <link rel="import" href="../helpers/common.html">
-    <link rel="import" href="../../src/unlock-settings.html">
+    <link rel="import" href="../../helpers/common.html">
+    <link rel="import" href="../../../src/unlock/unlock-view.html">
   </head>
   <body>
     <test-fixture id="defaultAttributes">
       <template>
-        <unlock-settings></unlock-settings>
+        <unlock-view></unlock-view>
       </template>
     </test-fixture>
 
     <script>
-      let unlockSettings;
-      describe('unlock-settings', function() {
+      let unlockView;
+      describe('unlock-view', function() {
         beforeEach(function(done) {
-          unlockSettings = fixture('defaultAttributes');
+          unlockView = fixture('defaultAttributes');
           const stringsLoaded = function() {
-            unlockSettings.removeEventListener(
+            unlockView.removeEventListener(
               'app-localize-resources-loaded',
               stringsLoaded
             );
             flush(done);
           };
-          unlockSettings.addEventListener(
+          unlockView.addEventListener(
             'app-localize-resources-loaded',
             stringsLoaded
           );
         });
 
         it('should have the correct type', function() {
-          unlockSettings.is.should.eql('unlock-settings');
+          unlockView.is.should.eql('unlock-view');
         });
 
         describe('when the passphrase is empty', function() {
           beforeEach(function() {
-            unlockSettings.$.passphrase.value = '';
+            unlockView.$.passphrase.value = '';
           });
 
           it('should disable the unlock button', function() {
-            unlockSettings.$.unlock.disabled.should.be.true;
+            unlockView.$.unlock.disabled.should.be.true;
           });
         });
 
         describe('when the unlock button is pressed', function() {
           beforeEach(function() {
-            unlockSettings.$.passphrase.value = 'passphrase';
+            unlockView.$.passphrase.value = 'passphrase';
           });
 
           it('should emit an unlock event', function(done) {
-            unlockSettings.addEventListener('unlock', function(event) {
+            unlockView.addEventListener('unlock', function(event) {
               event.detail.passphrase.should.eql('passphrase');
               done();
             });
-            unlockSettings.$.unlock.click();
+            unlockView.$.unlock.click();
           });
         });
       });
