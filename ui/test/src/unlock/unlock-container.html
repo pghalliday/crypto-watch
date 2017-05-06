@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>unlock-container</title>
+
+    <script src="../../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../helpers/common.html">
+    <link rel="import" href="../../../src/unlock/unlock-container.html">
+  </head>
+  <body>
+    <test-fixture id="defaultAttributes">
+      <template>
+        <unlock-container></unlock-container>
+      </template>
+    </test-fixture>
+
+    <script>
+      let unlockContainer;
+      describe('unlock-container', function() {
+        beforeEach(function() {
+          app.helpers.reset();
+          unlockContainer = fixture('defaultAttributes');
+        });
+
+        it('should have the correct type', function() {
+          unlockContainer.is.should.eql('unlock-container');
+        });
+
+        it('should contain a view element', function() {
+          unlockContainer.$.view.is.should.eql('unlock-view');
+        });
+
+        it('should set the default view attributes', function() {
+          unlockContainer.$.view.hasError.should.be.false;
+          unlockContainer.$.view.errorText.should.eql('');
+        });
+
+        it('should set the view error attributes', function() {
+          app.unlock.hasError.value = true;
+          app.unlock.getErrorText.value = 'FAIL';
+          app.helpers.notifyStateChange();
+          unlockContainer.$.view.hasError.should.be.true;
+          unlockContainer.$.view.errorText.should.eql('FAIL');
+        });
+
+        describe('on an unlock event', function() {
+          beforeEach(function() {
+            unlockContainer.$.view.dispatchEvent(new CustomEvent('unlock', {
+              detail: {
+                passphrase: 'passphrase',
+              },
+            }));
+          });
+
+          it('should unlock the settings', function() {
+            app.unlock.submit.should.have.been.calledWith(
+              'passphrase'
+            );
+            app.store.dispatch.should.have.been.calledWith(
+              app.unlock.submit.value
+            );
+          });
+        });
+
+        describe('on complete', function() {
+          beforeEach(function() {
+            sinon.spy(unlockContainer.$.view, 'reset');
+            app.unlock.getSettings.value = {};
+            app.unlock.isComplete.value = true;
+            app.helpers.notifyStateChange();
+          });
+
+          it('should reset the view', function() {
+            unlockContainer.$.view.reset.should.have.been.calledOnce;
+          });
+
+          it('should complete the unlock', function() {
+            app.completeUnlock.should.have.been.calledWith({});
+            app.store.dispatch.should.have.been.calledWith(
+              app.completeUnlock.value
+            );
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

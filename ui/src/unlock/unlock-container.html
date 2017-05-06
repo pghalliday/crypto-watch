@@ -1,0 +1,72 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../lib/redux-mixin.html">
+<link rel="import" href="./unlock-view.html">
+
+<dom-module id="unlock-container">
+  <template>
+    <unlock-view
+      id="view"
+      pending="[[pending]]"
+      has-error="[[hasError]]"
+      error-text="[[errorText]]"
+      on-unlock="_unlock"
+    ></unlock-view>
+  </template>
+
+  <script>
+    class UnlockContainer extends Polymer.ReduxMixin(Polymer.Element) {
+      static get is() {
+        return 'unlock-container';
+      }
+
+      static get properties() {
+        return {
+          is: {
+            type: String,
+            value: UnlockContainer.is,
+          },
+          hasError: {
+            type: Boolean,
+            statePath: app.unlock.hasError,
+          },
+          errorText: {
+            type: String,
+            statePath: app.unlock.getErrorText,
+          },
+          complete: {
+            type: Boolean,
+            statePath: app.unlock.isComplete,
+          },
+          settings: {
+            type: Object,
+            statePath: app.unlock.getSettings,
+          },
+        };
+      }
+
+      static get actions() {
+        return {
+          submit: app.unlock.submit,
+          complete: app.completeUnlock,
+        };
+      }
+
+      ready() {
+        super.ready();
+        this.addEventListener('state-changed', () => this._stateChanged());
+      }
+
+      _stateChanged() {
+        if (this.complete) {
+          this.$.view.reset();
+          this.dispatch('complete', this.settings);
+        }
+      }
+
+      _unlock(event) {
+        this.dispatch('submit', event.detail.passphrase);
+      }
+    }
+    window.customElements.define(UnlockContainer.is, UnlockContainer);
+  </script>
+</dom-module>

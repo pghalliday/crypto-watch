@@ -41,6 +41,10 @@
           unlockView.is.should.eql('unlock-view');
         });
 
+        it('should not display any error text', function() {
+          unlockView.$.error.hidden.should.be.true;
+        });
+
         describe('when the passphrase is empty', function() {
           beforeEach(function() {
             unlockView.$.passphrase.value = '';
@@ -62,6 +66,28 @@
               done();
             });
             unlockView.$.unlock.click();
+          });
+
+          describe('#reset', function() {
+            beforeEach(function() {
+              unlockView.reset();
+            });
+
+            it('should reset the input fields', function() {
+              unlockView.$.passphrase.value.should.eql('');
+            });
+          });
+
+          describe('when there is an error', function() {
+            beforeEach(function() {
+              unlockView.hasError = true;
+              unlockView.errorText = 'FAIL';
+            });
+
+            it('should display the error text', function() {
+              unlockView.$.error.hidden.should.be.false;
+              unlockView.$.error.textContent.should.eql('FAIL');
+            });
           });
         });
       });

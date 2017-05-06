@@ -11,7 +11,7 @@
 <link rel="import" href="./initialize-error.html">
 <link rel="import" href="./initialize-pending.html">
 <link rel="import" href="./create/create-container.html">
-<link rel="import" href="./unlock/unlock-view.html">
+<link rel="import" href="./unlock/unlock-container.html">
 <link rel="import" href="./main/main-view.html">
 
 <dom-module id="ui-root">
@@ -35,7 +35,7 @@
           <create-container id="create"></create-container>
         </template>
         <template is="dom-if" if="[[_unlock(hasSettings, isUnlocked)]]">
-          <unlock-view id="unlock"></unlock-view>
+          <unlock-container id="unlock"></unlock-container>
         </template>
         <template is="dom-if" if="[[isUnlocked]]">
           <main-view id="main" settings="[[settings]]"></main-view>

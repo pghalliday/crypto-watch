@@ -10,6 +10,7 @@
     <paper-card>
       <div class="card-content">
         <div>[[localize('unlock-view-message')]]</div>
+        <div id="error" hidden="[[!hasError]]">[[errorText]]</div>
         <paper-input
           id="passphrase"
           type="password"
@@ -50,6 +51,14 @@
             type: String,
             value: '',
           },
+          hasError: {
+            type: Boolean,
+            value: false,
+          },
+          errorText: {
+            type: String,
+            value: '',
+          },
         };
       }
 
@@ -67,6 +76,10 @@
 
       attached() {
         this.loadResources(this.resolveUrl('../../../locales.json'));
+      }
+
+      reset() {
+        this.passphrase = '';
       }
     }
     window.customElements.define(UnlockView.is, UnlockView);
