@@ -77,6 +77,17 @@
             createView.$.confirmPassphrase.value = 'passphrase';
           });
 
+          describe('#reset', function() {
+            beforeEach(function() {
+              createView.reset();
+            });
+
+            it('should reset the input fields', function() {
+              createView.$.passphrase.value.should.eql('');
+              createView.$.confirmPassphrase.value.should.eql('');
+            });
+          });
+
           describe('when the create button is pressed', function() {
             it('should emit an create event', function(done) {
               createView.addEventListener('create', function(event) {

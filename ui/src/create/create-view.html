@@ -99,6 +99,11 @@
       attached() {
         this.loadResources(this.resolveUrl('../../../locales.json'));
       }
+
+      reset() {
+        this.passphrase = '';
+        this.confirmPassphrase = '';
+      }
     }
     window.customElements.define(CreateView.is, CreateView);
   </script>

@@ -9,13 +9,12 @@ app.helpers.stub([], 'hasSettings', false);
 app.helpers.stub([], 'isUnlocked', false);
 app.helpers.stub([], 'getSettings', undefined);
 app.helpers.stub([], 'initialize');
-app.helpers.stub([], 'createComplete');
-app.helpers.stub([], 'unlockComplete');
+app.helpers.stub([], 'completeCreate');
 
 app.helpers.stub(['unlock'], 'hasError', false);
 app.helpers.stub(['unlock'], 'getErrorText', '');
 app.helpers.stub(['unlock'], 'isComplete', false);
-app.helpers.stub(['unlock'], 'getSettings', undefined);
+app.helpers.stub(['unlock'], 'getSettings', null);
 app.helpers.stub(['unlock'], 'submit');
 
 app.helpers.stub(['create'], 'isPending', false);
@@ -23,7 +22,7 @@ app.helpers.stub(['create'], 'hasError', false);
 app.helpers.stub(['create'], 'getErrorText', '');
 app.helpers.stub(['create'], 'isComplete', false);
 app.helpers.stub(['create'], 'getCount', 0);
-app.helpers.stub(['create'], 'getSettings', undefined);
+app.helpers.stub(['create'], 'getSettings', null);
 app.helpers.stub(['create'], 'submit');
 
 app.helpers.stub(['delete'], 'isPending', false);

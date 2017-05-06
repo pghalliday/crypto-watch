@@ -10,7 +10,7 @@
 <link rel="import" href="./ui-theme.html">
 <link rel="import" href="./initialize-error.html">
 <link rel="import" href="./initialize-pending.html">
-<link rel="import" href="./create/create-view.html">
+<link rel="import" href="./create/create-container.html">
 <link rel="import" href="./unlock/unlock-view.html">
 <link rel="import" href="./main/main-view.html">
 
@@ -32,7 +32,7 @@
           <initialize-pending id="pending"></initialize-pending>
         </template>
         <template is="dom-if" if="[[_create(isPending, hasSettings, hasError)]]">
-          <create-view id="create"></create-view>
+          <create-container id="create"></create-container>
         </template>
         <template is="dom-if" if="[[_unlock(hasSettings, isUnlocked)]]">
           <unlock-view id="unlock"></unlock-view>

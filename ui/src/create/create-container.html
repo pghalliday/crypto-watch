@@ -1,0 +1,83 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../lib/redux-mixin.html">
+<link rel="import" href="./create-view.html">
+
+<dom-module id="create-container">
+  <template>
+    <create-view
+      id="view"
+      pending="[[pending]]"
+      has-error="[[hasError]]"
+      error-text="[[errorText]]"
+      on-create="_create"
+    ></create-view>
+  </template>
+
+  <script>
+    class CreateContainer extends Polymer.ReduxMixin(Polymer.Element) {
+      static get is() {
+        return 'create-container';
+      }
+
+      static get properties() {
+        return {
+          is: {
+            type: String,
+            value: CreateContainer.is,
+          },
+          pending: {
+            type: Boolean,
+            statePath: app.create.isPending,
+          },
+          hasError: {
+            type: Boolean,
+            statePath: app.create.hasError,
+          },
+          errorText: {
+            type: String,
+            statePath: app.create.getErrorText,
+          },
+          complete: {
+            type: Boolean,
+            statePath: app.create.isComplete,
+          },
+          count: {
+            type: Number,
+            statePath: app.create.getCount,
+          },
+          settings: {
+            type: Object,
+            statePath: app.create.getSettings,
+          },
+        };
+      }
+
+      static get actions() {
+        return {
+          submit: app.create.submit,
+          complete: app.completeCreate,
+        };
+      }
+
+      ready() {
+        super.ready();
+        this.addEventListener('state-changed', () => this._stateChanged());
+      }
+
+      _stateChanged() {
+        if (this.complete) {
+          this.$.view.reset();
+          this.dispatch('complete', {
+            settings: this.settings,
+            count: this.count,
+          });
+        }
+      }
+
+      _create(event) {
+        this.dispatch('submit', event.detail.passphrase, {});
+      }
+    }
+    window.customElements.define(CreateContainer.is, CreateContainer);
+  </script>
+</dom-module>

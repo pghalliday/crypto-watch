@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>create-view</title>
+
+    <script src="../../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../helpers/common.html">
+    <link rel="import" href="../../../src/create/create-container.html">
+  </head>
+  <body>
+    <test-fixture id="defaultAttributes">
+      <template>
+        <create-container></create-container>
+      </template>
+    </test-fixture>
+
+    <script>
+      let createContainer;
+      describe('create-container', function() {
+        beforeEach(function() {
+          app.helpers.reset();
+          createContainer = fixture('defaultAttributes');
+        });
+
+        it('should have the correct type', function() {
+          createContainer.is.should.eql('create-container');
+        });
+
+        it('should contain a view element', function() {
+          createContainer.$.view.is.should.eql('create-view');
+        });
+
+        it('should set the default view attributes', function() {
+          createContainer.$.view.pending.should.be.false;
+          createContainer.$.view.hasError.should.be.false;
+          createContainer.$.view.errorText.should.eql('');
+        });
+
+        it('should set the view pending attribute', function() {
+          app.create.isPending.value = true;
+          app.helpers.notifyStateChange();
+          createContainer.$.view.pending.should.be.true;
+        });
+
+        it('should set the view error attributes', function() {
+          app.create.hasError.value = true;
+          app.create.getErrorText.value = 'FAIL';
+          app.helpers.notifyStateChange();
+          createContainer.$.view.hasError.should.be.true;
+          createContainer.$.view.errorText.should.eql('FAIL');
+        });
+
+        describe('on a create event', function() {
+          beforeEach(function() {
+            createContainer.$.view.dispatchEvent(new CustomEvent('create', {
+              detail: {
+                passphrase: 'passphrase',
+              },
+            }));
+          });
+
+          it('should create new settings', function() {
+            app.create.submit.should.have.been.calledWith(
+              'passphrase',
+              {}
+            );
+            app.store.dispatch.should.have.been.calledWith(
+              app.create.submit.value
+            );
+          });
+        });
+
+        describe('on complete', function() {
+          beforeEach(function() {
+            sinon.spy(createContainer.$.view, 'reset');
+            app.create.getSettings.value = {};
+            app.create.getCount.value = 2;
+            app.create.isComplete.value = true;
+            app.helpers.notifyStateChange();
+          });
+
+          it('should reset the view', function() {
+            createContainer.$.view.reset.should.have.been.calledOnce;
+          });
+
+          it('should complete the create', function() {
+            app.completeCreate.should.have.been.calledWith({
+              settings: {},
+              count: 2,
+            });
+            app.store.dispatch.should.have.been.calledWith(
+              app.completeCreate.value
+            );
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
