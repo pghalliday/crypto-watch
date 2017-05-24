@@ -1,16 +1,16 @@
 {
-  "name": "crypto-watch",
-  "short_name": "crypto-watch",
-  "description": "Watch crypto-currency addresses",
+  "name": "Hodler",
+  "short_name": "Hodler",
+  "description": "Watch assets",
   "start_url": ".",
   "icons": [
       {
-        "src": "/crypto-watch/images/icons/android-chrome-192x192.png",
+        "src": "/hodler/images/icons/android-chrome-192x192.png",
         "sizes": "192x192",
         "type": "image/png"
       },
       {
-        "src": "/crypto-watch/images/icons/android-chrome-512x512.png",
+        "src": "/hodler/images/icons/android-chrome-512x512.png",
         "sizes": "512x512",
         "type": "image/png"
       }
