@@ -29,14 +29,13 @@
   "dependencies": {
     "polymer": "^2.0.0-rc.3"
   },
-  "_release": "1bd25093d5",
+  "_release": "7e3b5f1a86",
   "_resolution": {
     "type": "branch",
     "branch": "polymer-2",
-    "commit": "1bd25093d58872f2c272943c6d4b03b876f94533"
+    "commit": "7e3b5f1a86c6ed6472116a3e88d8255dc5dfd7f5"
   },
   "_source": "https://github.com/tur-nr/polymer-redux.git",
   "_target": "polymer-2",
-  "_originalSource": "polymer-redux",
-  "_direct": true
+  "_originalSource": "polymer-redux"
 }
