@@ -1,7 +1,7 @@
 {
-  "name": "crypto-watch",
+  "name": "hodler",
   "version": "1.0.0",
-  "description": "Watch crypto-currency addresses",
+  "description": "Watch assets",
   "main": "index.js",
   "config": {
     "polymer_test_skip": "sauce"
@@ -34,14 +34,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pghalliday/crypto-watch.git"
+    "url": "git+https://github.com/pghalliday/hodler.git"
   },
   "author": "Peter Halliday <pghalliday@gmail.com> (http://pghalliday.com)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pghalliday/crypto-watch/issues"
+    "url": "https://github.com/pghalliday/hodler/issues"
   },
-  "homepage": "https://github.com/pghalliday/crypto-watch#readme",
+  "homepage": "https://github.com/pghalliday/hodler#readme",
   "devDependencies": {
     "alarmist": "^1.0.23",
     "alarmist-npm": "^1.0.5",

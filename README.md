@@ -1,9 +1,9 @@
-# crypto-watch
+# Hodler
 
-[![Build Status](https://travis-ci.org/pghalliday/crypto-watch.svg?branch=master)](https://travis-ci.org/pghalliday/crypto-watch)
-[![Coverage Status](https://coveralls.io/repos/github/pghalliday/crypto-watch/badge.svg?branch=master)](https://coveralls.io/github/pghalliday/crypto-watch?branch=master)
+[![Build Status](https://travis-ci.org/pghalliday/hodler.svg?branch=master)](https://travis-ci.org/pghalliday/hodler)
+[![Coverage Status](https://coveralls.io/repos/github/pghalliday/hodler/badge.svg?branch=master)](https://coveralls.io/github/pghalliday/hodler?branch=master)
 
-Watch crypto-currency addresses.
+Watch assets.
 
 ## Contributing
 

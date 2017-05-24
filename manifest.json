@@ -1,7 +1,7 @@
 {
-  "name": "crypto-watch",
-  "short_name": "crypto-watch",
-  "description": "Watch crypto-currency addresses",
+  "name": "Hodler",
+  "short_name": "Hodler",
+  "description": "Watch assets",
   "start_url": ".",
   "icons": [
       {

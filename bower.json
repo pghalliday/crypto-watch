@@ -1,11 +1,11 @@
 {
-  "name": "crypto-watch",
+  "name": "hodler",
   "description": "Watch crypto-currency addresses",
   "authors": [
     "Peter Halliday <pghalliday@gmail.com> (http://pghalliday.com)"
   ],
   "license": "ISC",
-  "homepage": "https://github.com/pghalliday/crypto-watch",
+  "homepage": "https://github.com/pghalliday/hodler",
   "ignore": [
     "**/.*",
     "node_modules",

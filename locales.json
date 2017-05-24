@@ -1,7 +1,7 @@
 {
   "en": {
-    "app-title": "CryptoWatch",
-    "create-view-message": "This is the first time you have run CryptoWatch. Enter a passphrase to initialize a new, encrypted settings database.",
+    "app-title": "Hodler",
+    "create-view-message": "This is the first time you have run Hodler. Enter a passphrase to initialize a new, encrypted settings database.",
     "passphrase-label": "Passphrase",
     "confirm-passphrase-label": "Confirm passphrase",
     "confirm-passphrase-error": "The passphrases do not match",

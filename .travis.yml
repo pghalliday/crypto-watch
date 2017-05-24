@@ -3,7 +3,7 @@ node_js:
 - '6'
 script:
 - set -e
-- npm config set crypto-watch:polymer_test_skip local
+- npm config set hodler:polymer_test_skip local
 - npm run build
 - npm run coveralls
 - npm run deploy
