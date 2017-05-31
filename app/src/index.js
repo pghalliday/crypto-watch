@@ -21,7 +21,7 @@ const composeEnhancers = composeWithDevTools({
   // devtool options
 });
 
-const duckling = appFactory(new Storage('crypto-watch'));
+const duckling = appFactory(new Storage('hodler'));
 const {app, reducer} = resolve(duckling);
 
 module.exports = {
